@@ -1,0 +1,263 @@
+Mongoose : For connect my bakend with database i will use mongoose 
+
+
+Database connection proccess :
+
+* Connect MongoDB with node js :
+-------------------------------
+1) Create a file db.js in the root Folder
+2) the db.js file that you have created is essentially responsible for the establishing a connection between your NOde.js and MongoDB Database using Mongoose library.
+3) Mongoose is responsible for make connection between node.js and Database
+4) So install & import Mongoose library
+
+* Connection Step by Step : 
+---------------------------
+1) Import Mongoose and Define the MongoDB URL : in the db.js file, you first import the Mongoose library and define the URL to your MongoDB database. This URL  Formate should we :
+    const mongoURL = <hostname> : <port> / <databaseName>, In your code you have set the URL to "mongodb://127.0.0.1:27017/<MyDatabaseName>",
+2) SetUp the MongoDB Connection : next, you call mongoose.connect() to establish a connection to the MongoDB database using URL and some use some configuration options (useNewUrlParser: true,// useUnifiedTopology: true,) thie step initializes the connection process but does not actually connect at this points.
+
+3) Access the Default Connection Object : Mongoose maintains a Default connection Object representing the MongoDB conncetion. YOu retrive this object using "const db = mongoose.connection;"and you have to store in the vriable db. This object is what you will use to handle events and interact with the database.
+4) Define Events Listeners : you define events Listeners for the database connection using method like 
+ Exa. db.on("connected", () => {
+        console.log("Connected MongoDB server");
+    });
+ Exa. db.on("error", () => {
+        console.log("Connected MongoDB server");
+    });
+ Exa. db.on("disconnected", () => {
+        console.log("Connected MongoDB server");
+    });
+    These events Listeners allow you to react to different states of the database connection.
+
+5) Start Listening for Events : The code is set up to listen for for the events. when you all "mongoose.conncet()", Mongoose Start the connection process if the conncetion is successfull the "connected"  events is triggered and you log a message insication the you are "Connected MongoDB server" and if there is any "error" message to it will print same "error" message and it will print same for the "Disconnected"
+so that it helps to handle situations where connection is lost.
+
+6) Export Database Connection : Finally you export the db.js object which represents the MongoDB connection so that you can import and use it in other parts of your Node.js applications.
+
+Note: When your server runs. it typically requires or imports this db.js file to establish the database connection before handliling HTTP request.
+
+
+* what are models or schema?
+-----------------------------
+* Modles are like a blueprint of our database,
+* It's a representation of a specific collection in MongoDB, Like a Person
+* Once you have defined a models, you can create, read, update and delete documents in the corresponding MongoDB collection.
+* MongoDB allow you to define a schema for your documents. A Schema is like a blueprint that defins the structure and data types of your documents within a collection.
+* each Person's Detals (like owener , chef, manager,waiter)
+Exa. {
+    "name" : "Ashok",
+    "age: : 21,
+    "work" : "chef",
+    "Mobile": 12345678,
+    "email": "chef@gmail.com"
+
+}
+
+
+* what is Body-parser 
+-----------------------
+1) bodyParser is a middleware library for Express.js
+2) it is used to parse and extract the body of incoming HTTP requests.
+3) When a client(a web browse or a mobile app) send data to a server, it tupically includes that data in the body of an HTTP request.
+4) this data can in varius formates, such as JSON, form data or, URL-encoded data. bodyParser helps parse and extract this data from the request so that you can work with it in your Express.js applications
+5) bodyParser processes the request body before it reaches your route handlers, making the parsed data available in the "req.body" for further processing.
+6) bodyParser.json() automatically parse the JSON data from the request body and convert it into a JavaScript Object , which is then stored in the req.body
+7) Express js used lost of middleware and to use middleware we use the aap.use()
+Exa.
+    const bodyParser = require('body-parse')
+    aap.use(bodyParser.Json());
+
+
+* Send Data from Client to Server
+----------------------------------
+1) we need endpoint where the client send the data and data need to be saved in database.
+2) we need a method called POST,
+3) Now code the POST method to add the person,
+4) if we send the random value as well Mongoose will not save random value other predifined Schema
+
+Exa.
+    NewPerson.save(error, savePerson){
+        if(error){
+            conlsole.log("error Saving PErson data");
+            res.status(500).json({error, "internal server error"})
+        }
+        else{
+            conosle.log("Data save successfull");
+            res.status(200).json(savePerson);
+        }
+    }
+
+
+* Async and Await 
+------------------
+1) Nowadays no on use callback function like we used in the POST methods They look quite complex and also do not give us code readabillity.
+2) what actually callback does, calback is a function that is executed just after the execution of another main function, it means the callback will wait untill its main funtion is not executed.
+3) "Async and await" : are feture in JavaScript that make it easier to work with asynchronus code, such as netwok reqeust, file system operations or database queries.
+4) using try and catch block
+5) the try block contains the code for creating a new Person documents and Saving it to the database using await NewPerson.save(). measns i write all successfull code inside try block.
+6) if an error occurs during any step, it is caught in the catch block and an error response is send with a 500 Internal Server status.
+Exa. 
+app.post("/person", async (req, res) => {
+  try {
+    // assuming the request body contains the person data
+    const data = req.body; 
+    // create a new person documtent using the mongoose model
+    const newPerson = new Person(data);
+    // save the newPerson to the database
+    const response = await newPerson.save();
+    console.log("data save successfull");
+
+    // it wil return me on the console as a response 
+    res.status(200).json(response);
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server Error" });
+  }
+});
+
+* Async function : 
+----------------
+1) An async function is a function that is desinged to work wirth asynchronous operations. you declare a function as asuync by placing the async keywords before the function declaration.
+2) The primary purpose of an async function is to allow you to use the await keyword insicatio inside it, which simplifiles working with promises and asynchronous code.
+3) Inside an async function you can use await to pause the execution of the functio untill a promis is resolved. This makes the code appear more asynchronous and easier to read.
+
+* Await (await):
+----------------
+1) The await keyword is used inside asn async function to wait fo rthe resolution of a promise. it can only be used within an async function
+2) When await is used the function pauses at that line until the promise is resolved or rejected. This allows you to write code that appears sequential, even though it's performing asynchronous task.
+3) if the promis is resolved the result of the promise is returned. if the promise is rejected, it throws an error that can be aught using try.....catch.
+
+
+* CRUD applications (Create, Read, Update, Delete)
+--------------------------------------------------
+
+    Database operations                         HTTP methods
+    -------------------                    ----------------------
+C -     Create                                      POST
+R -     Read                                        GET
+U -     Update                                      PUT/PATCH
+D -     Delete                                      DELETE
+
+
+* Create schema for Menu : 
+--------------------------
+1) Now create a model for the Menu
+2) give all fields which we have required,
+
+
+
+
+
+
+
+Day 6 Video 
+------------
+* Parametrised API calls
+------------------------
+
+1) Now if someone told you to give a list of people who are only waiters
+2) Then we can create an endpoint like this
+3) /person/chef
+4) /person/waiter
+5) /person/manager
+6) But this is not the good way or correct method to create as many functions here we can use parametrized endpoints
+7) it can be dynamically inserted into the URL when Making a request to the API
+8) localhost:3000/person/word
+
+-> work = ["chef", "waiter", "manager"]
+Exa.
+// get person data acording to his post
+app.get("/person/:workType", async (req, res) => {
+  try {
+    const workType = req.params.workType;
+    if (workType == "chef" || workType == "waiter" || workType == "manager") {
+      const response = await Person.find({ work: workType });
+      console.log("data get successfull");
+      res.status(200).json(response);
+    } else {
+      res.status(404).json({ error: "Invalid workType" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+
+* Express Router 
+-----------------
+1) we have a lots of endpoints in a single file like server.js
+2) This make bad experience in code readability as well as code handliling.
+3) Express router is way to modularize and organize your route handliling code an Express.js applications
+4) so lets create a seperate file to manage endpoints /person and /menu
+5) Express Router is like a traffic cop for your web server
+6) Express router helps you organize and manage these pages or endpoints in your web applications. it's like creatingh separate folders for different types of tasks.
+7) Create a Folder routes->personRoutes.js
+
+use method  : 
+
+1) Create a Folder routes->personRoutes.js
+2) first import express and router from express,
+3) and make a function 
+Exa.
+    router.post("/", async (req, res) => {
+  try {
+    // assuming the request body contains the person data
+    const data = req.body;
+    // create a new person documtent using the mongoose model
+    const newPerson = new Person(data);
+    // save the newPerson to the database
+    const response = await newPerson.save();
+    console.log("data save successfull");
+
+    // it wil return me on the console as a response
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server Error" });
+  }
+});
+
+
+* Update operations
+--------------------
+1) we will update our person Records, for that we will create an endpoint from where we are able to update Records
+2) for Updation we need two main things
+    * which records we want to update?
+    * what exactly we want to update?
+3) For update we will use PUT method to create endpoint
+4) what is a unique identifier in a documents in a collection?
+5) It's _id which is given by mongodb itself, we will use this to find the particular record which we want to update
+6) and now we will send the data as same like we did in POST method.
+
+Exa.
+router.put("/:id", async (req, res) => {
+  try {
+    const personId = req.params.id; // exact the id from the URL parameter
+    const UpdatedPersonData = req.body; // the data which we want to update
+    const response = await Person.findByIdAndUpdate(
+      personId,
+      UpdatedPersonData,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    // check id is present in my data base or not
+    if (!response) {
+      return res.status(404).json({ error: "data not found" });
+    }
+
+    console.log("data update successfully");
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+
+
