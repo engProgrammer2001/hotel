@@ -259,7 +259,21 @@ router.put("/:id", async (req, res) => {
 });
 
 
-* thisis commond to push the code :->  git push -u origin main
+* This is commond to push the code :->  git push -u origin main
+* for push the update code first we have to run 
+ 1) git add .
+ 2) git commit -m "message"
+ 3) git push
+ 4) go to github repository and refresh the code 
 
 
+* Host MongoDB database 
+------------------------
+1) Now we are running locally MongoDB database
+2) All data Operation is perfomed in a local database, so let's host our database server and make our DB online presence
+3) MongoDB Atlas provides a Free cluster for users where you can host your database for free.
+4) MongoDB Atlas offers a cloud-based platform for hosting MongoDB database
+5) The free tier allows developer to explore and experiment with the database with0ut incurring any costs,.
+6) https://www.mongodb.com/atlas/database
+6) create an account for free 
 
