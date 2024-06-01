@@ -12,7 +12,7 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 const PORT = process.env.PORT || 3000;
 
-const MenuItems = require("./models/MenuItems.js");
+// const MenuItems = require("./models/MenuItems.js");
 
 app.get("/", function (req, res) {
   res.send("your server is running succesfully! Welcome to My Hotels");
