@@ -277,3 +277,17 @@ router.put("/:id", async (req, res) => {
 6) https://www.mongodb.com/atlas/database
 6) create an account for free 
 
+
+
+* Dotenv
+---------
+1) The Dotenv module in the Node.js is used to manage configuration variables and sensitive information in your applications 
+2) It's particularly usefull for keeping sensitive data like API keys database connection strings, and other environments-specific configurartions separate from your code.
+3) for use Dotenv files first I have to install Dotenv
+Exa. "npm install dotent"
+4) Create a .env file
+5) this is where you will store your environment-specific configuration variables.
+6) formate VAR_NAME = value.
+
+
+
