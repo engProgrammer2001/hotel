@@ -5,7 +5,7 @@ require('dotenv').config();
 // define the mongoDB connection URL
 const mongoURL = process.env.DB_URL_LOCAL; // in the place of hotel i can use any name
 
-// const mongoURL = "mongodb+srv://kushwahaashokkumar82:9GAlUzMU56FzDByT@cluster0.zspmqhn.mongodb.net/"
+// const mongoURL = process.env.DB_URL_ONLINE;
 
 // connect to mongoDB
 mongoose.connect(mongoURL, {
