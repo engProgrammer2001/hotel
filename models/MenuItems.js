@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const menuItemSchema = new mongoose.Schema({
+const menuItemsSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -11,7 +11,7 @@ const menuItemSchema = new mongoose.Schema({
   },
   taste: {
     type: String,
-    enum: ["sweet", "salty", "spicy", "sour"],
+    enum: ["sweet", "spicy", "sour", "salty"],
     required: true,
   },
   is_drink: {
@@ -22,15 +22,11 @@ const menuItemSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
-  num_sales: {
+  num_salses: {
     type: Number,
     default: 0,
   },
-  created_at: {
-    type: Date,
-    default: Date.now,
-  },
 });
 
-const MenuItems = mongoose.model("MenuItems", menuItemSchema);
-module.exports = MenuItems;
+const MenuItems = mongoose.model("MenuItems", menuItemsSchema);
+module.exports = MenuItems; ;
