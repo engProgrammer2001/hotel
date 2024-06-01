@@ -290,4 +290,6 @@ Exa. "npm install dotent"
 6) formate VAR_NAME = value.
 
 
+this is update for the check and thi s 
+
 
